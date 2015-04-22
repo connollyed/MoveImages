@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Move Images On Page Around Mouse Pointer</title>
+		<style type="text/css">
+			img{
+				position: absolute;
+				height: 60px;
+			}
+		</style>
+	</head>
+	
+	<body>
+	
+	<!-- javascript: -->
+	<script type="text/javascript">
+		"use strict";
+		var NUM_OF_PICS = 31;
+		
+		// Place Images in Document
+		for(var img=1;img<=31; img++){
+			var oImg=document.createElement("img");
+			var filename = "images" + String(img) + ".jpg";
+			oImg.setAttribute('src', filename);
+			document.body.appendChild(oImg);
+		}
+		var images = document.getElementsByTagName("img");
+		document.onmousemove = function(e) {
+			var event = e || window.event;
+			window.mouseX = event.clientX;
+			window.mouseY = event.clientY;
+		}
+
+		var rot = 0;
+		function mousemov() {
+			for(var i = 0; i < images.length; i++){
+				images[i].style.left = String(window.mouseX + (180 * Math.cos(rot))) + "px";
+				images[i].style.top = String(window.mouseY + (180 * Math.sin(rot))) +"px";
+				rot++;
+				console.log(rot);
+				console.log((images[i].style.transform));
+				images[i].style.transform = "rotate("+String(rot)+"deg)";
+			}
+		}
+
+		window.onload = function() {
+			setInterval(mousemov, 100);
+		}
+	</script>
+	</body>
+</html>
